@@ -1,3 +1,7 @@
+bincode
+cdylib
+dylib
 repr
+rustup
 winapi
 zemax
