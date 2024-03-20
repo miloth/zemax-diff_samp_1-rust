@@ -50,3 +50,7 @@ cargo doc --document-private-items --no-deps  --target=x86_64-pc-windows-gnu
 ```
 
 Add the additional `--open` flag to open the documentation in your default web browser.
+
+## Credits
+
+Credits to [Zemax](https://www.ansys.com/products/optics/ansys-zemax-opticstudio) for the examples in C and C++ that inspired this.
