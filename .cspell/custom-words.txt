@@ -1,7 +1,9 @@
 bincode
 cdylib
 dylib
+raytrace
 repr
 rustup
+struct
 winapi
 zemax

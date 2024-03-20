@@ -2,6 +2,9 @@
 
 This can be modified or extended to include the other kinds of DLLs supported by Zemax.
 
+The entry points for the raytrace and the parameter names are defined in the `./src/lib.rs` file.
+The pointers coming from Zemax are cast to the `struct` defined in `./src/data_structures.rs`.
+
 ## Compilation
 
 ### On Windows
@@ -46,7 +49,7 @@ and the resulting DLL will be in the `./target/x86_64-pc-windows-gnu/release/` f
 Simply run:
 
 ```sh
-cargo doc --document-private-items --no-deps  --target=x86_64-pc-windows-gnu
+cargo doc --document-private-items --no-deps --target=x86_64-pc-windows-gnu
 ```
 
 Add the additional `--open` flag to open the documentation in your default web browser.
