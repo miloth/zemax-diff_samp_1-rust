@@ -18,6 +18,6 @@ Cargo.lock
 desktop.ini
 
 # Editor
-.vscode/
+.vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
