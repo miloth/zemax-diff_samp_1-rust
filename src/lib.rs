@@ -36,14 +36,14 @@ pub extern "system" fn DllMain(_: *const u8, ul_reason_for_call: u32, _: *const 
 pub unsafe extern "C" fn UserDiffraction(data_pointer: *mut c_double) -> c_int {
     let data = match data_structures::DiffractiveData::from_pointer(&data_pointer) {
         Some(data) => data,
-        None => return -1, // Fail if the pointer is NULL
+        None => return 1, // Fail if the pointer is NULL
     };
 
     // Place 90% of the energy in the transmitted path, 10% in the reflected path
     data.relative_energy = match data.is_reflective as isize {
         0 => functions::get_total_power(data.ending_order, data.starting_order) * 0.9,
         1 => functions::get_total_power(data.ending_order, data.starting_order) * 0.1,
-        _ => return -1, // Fail if the is_reflective field is not 0 or 1
+        _ => return 1, // Fail if the is_reflective field is not 0 or 1
     };
 
     // Return only phase and phase derivatives
