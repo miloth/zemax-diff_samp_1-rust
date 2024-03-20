@@ -1,0 +1,11 @@
+[package]
+name = "zmx_dll_test"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]  # create a C-compatible dynamic library, as opposed to Rust "dylib"
+
+[dependencies]
+bincode = "2.0.0-rc.3"
+winapi = { version="0.3.9", features=["winnt"] }
