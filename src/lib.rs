@@ -1,3 +1,5 @@
+#![doc = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/README.md"))]
+
 use std::ffi::{c_char, c_double, c_int};
 
 #[cfg(target_os = "windows")]
@@ -8,9 +10,7 @@ use winapi::um::winnt::{
 mod data_structures;
 mod functions;
 
-/// Entrypoint for the DLL, more info [here](https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain).
-///
-/// Rust version inspired by [this](https://github.com/rust-lang/rust/issues/67399#issue-539755149).
+/// Entrypoint for the DLL, more info [here](https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain). Thr `rust` version is inspired by [this topic](https://github.com/rust-lang/rust/issues/67399#issue-539755149).
 #[cfg(target_os = "windows")]
 #[no_mangle]
 pub extern "system" fn DllMain(_: *const u8, ul_reason_for_call: u32, _: *const u8) -> u32 {
