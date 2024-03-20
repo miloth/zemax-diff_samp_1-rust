@@ -1,3 +1,5 @@
+use std::ffi::c_double;
+
 /// Data structure to interpret the data returned by the DLL for a diffractive surface.
 #[repr(C, align(8))]
 #[derive(Debug)]
@@ -42,4 +44,10 @@ pub struct DiffractiveData {
 
     pub lines_per_um: f64, // data 51 = lines per um for the reflected ray
     _lines_per_um_refracted: f64, // data 52 = lines per um for the refracted ray, same as the one above
+}
+
+impl DiffractiveData {
+    pub fn from_pointer(data_pointer: &*mut c_double) -> Option<&mut Self> {
+        unsafe { data_pointer.cast::<DiffractiveData>().as_mut() }
+    }
 }

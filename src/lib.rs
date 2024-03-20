@@ -34,21 +34,19 @@ pub extern "system" fn DllMain(_: *const u8, ul_reason_for_call: u32, _: *const 
 /// This function is unsafe because it dereferences a raw pointer and writes to it, so Zemax can fetch results from it.
 #[no_mangle]
 pub unsafe extern "C" fn UserDiffraction(data_pointer: *mut c_double) -> c_int {
-    let data = unsafe {
-        data_pointer
-            .cast::<data_structures::DiffractiveData>()
-            .as_mut()
-    }
-    .expect("pointer is not NULL");
-
-    // Place 95% of the energy in the transmitted path, 5% in the reflected path
-    data.relative_energy = if data.is_reflective == 0.0 {
-        functions::get_total_power(data.ending_order, data.starting_order) * 0.95
-    } else {
-        functions::get_total_power(data.ending_order, data.starting_order) * 0.05
+    let data = match data_structures::DiffractiveData::from_pointer(&data_pointer) {
+        Some(data) => data,
+        None => return -1, // Fail if the pointer is NULL
     };
 
-    // Also return the phase and derivatives
+    // Place 90% of the energy in the transmitted path, 10% in the reflected path
+    data.relative_energy = match data.is_reflective as isize {
+        0 => functions::get_total_power(data.ending_order, data.starting_order) * 0.9,
+        1 => functions::get_total_power(data.ending_order, data.starting_order) * 0.1,
+        _ => return -1, // Fail if the is_reflective field is not 0 or 1
+    };
+
+    // Return only phase and phase derivatives
     data.return_flag = 1.0;
     data.phase_derivatives = [
         0.0,
